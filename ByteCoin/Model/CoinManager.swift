@@ -16,4 +16,29 @@ struct CoinManager {
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
 
     
+    func getCoinPrice(for currency: String){
+        
+        let urlString = "\(baseURL)/\(currency)?apikey=\(apiKey)"
+        
+        //1.create a URL
+        if let url = URL(string: urlString){
+            
+            //2.create a URLSession
+            let session = URLSession(configuration: .default)
+            
+            //3.give the session a task
+            let task = session.dataTask(with: url) { data, response, error in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                let dataAsString = String(data: data!, encoding: .utf8)
+                print(dataAsString)
+            }
+            //4.Start the task
+            task.resume()
+        }
+    }
+    
 }
